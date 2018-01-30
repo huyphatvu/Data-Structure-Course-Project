@@ -1,0 +1,24 @@
+ 
+        body {
+            background-color: -webkit-linear-gradient(top, #0047b3, #66a3ff);
+            background-color: -moz-linear-gradient(top, #0047b3, #0047b3);
+            background-image: -ms-linear-gradient(top, #80b3ff, #80b3ff);
+            background-image: -o-linear-gradient(top, #0000ff, #66a3ff);
+            background-image: linear-gradient(to bottom, #0047b3, #80b3ff);
+        }
+
+  
+       #map {
+        height: 620px;
+        resize: vertical;
+        width: 100%;
+       }
+        div {
+        resize: both;
+ 
+        }
+      
+iframe {
+    display: none;
+}
+  

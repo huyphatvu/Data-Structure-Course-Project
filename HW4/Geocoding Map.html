@@ -1,0 +1,139 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+      <link rel="stylesheet" type="text/css" href="style.css"> 
+
+  </head>
+    <body onload="geocodeLatLng(geocoder, map, infowindow);">
+<!--    <h3>My Google Maps Demo With GeoCoding</h3>-->
+    <iframe id="latlngframe" src="savedCoord.txt" width="100%" height="300" >
+    </iframe>
+
+    
+    <div id="map"></div>
+    <script>
+      
+    //GLOBAL VARIABLE
+    var geocoder;
+    var map;
+    var infowindow;
+    var mycoordinates = [];
+    var directionsService;
+    var directionsDisplay;
+        
+         //https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingResults  
+        //Initialize the map
+        function initMap() {
+            directionsService = new google.maps.DirectionsService();
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: {lat: 40.731, lng: -73.997}
+            });
+            geocoder = new google.maps.Geocoder;
+            infowindow = new google.maps.InfoWindow;
+            
+            directionsDisplay.setMap(map);
+//            directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+        }
+        
+        //Get the geocode latitude and longtitdue from text area
+        function geocodeLatLng(geocoder, map, infowindow) {
+        
+
+            var input = document.getElementById('latlngframe').contentWindow.document.body.textContent;
+
+//            alert(input);
+            
+//            var input =xmlhttpRequest.responseText;
+//          var latlngStr = input.split(',', 2);                  //IMPORTANT: need to create better input reading
+            var latlongArr = [];//create an empty array
+             //reading two input
+            var stringArr = input.split('\n');//contains input of strings
+ 
+           
+            //Get the input
+            for(var indexLine =0; indexLine < stringArr.length; indexLine++){
+//                    window.alert(indexLine);
+                if(stringArr[indexLine][0] != 'c'){
+                    if(stringArr[indexLine][0] == 'v'){
+                    var latlongVertex = { //create vertex
+                        vertexNum : 0,
+                        lat: 0,
+                        lng: 0
+                    };
+                        var tempString = stringArr[indexLine].split(' ');
+//                        window.alert(tempString);
+                        latlongVertex.vertexNum = parseInt(tempString[1]);
+                        latlongVertex.lng = parseFloat(tempString[2])/(Math.pow(10,6));
+                        latlongVertex.lat = parseFloat(tempString[3])/(Math.pow(10,6));
+//                         window.alert(latlongVertex);
+                    latlongArr.push(latlongVertex);
+                    }
+                
+                }
+            }
+  
+
+            latlongArr.forEach(function (curr_obj){//create mycoordinates based on latlongArr
+                mycoordinates.push({lat: curr_obj.lat, lng: curr_obj.lng}) ; 
+            });
+            
+          geocoder.geocode({'location': latlongArr[0]}, function(results, status) {
+            if (status === 'OK') {
+              if (results[0]) {
+                map.setZoom(12);
+                map.setCenter( new google.maps.LatLng(latlongArr[0].lat, latlongArr[0].lng));//set the center of the map
+                  drawLine(mycoordinates);
+                  drawMarker(mycoordinates);//draw marker
+
+//                  calRoute();
+                infowindow.setContent(results[0].formatted_address);
+//                infowindow.open(map, marker);
+              } else {
+                window.alert('No results found');
+              }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });
+        }
+        
+        //Draw the line to the map
+        //https://developers.google.com/maps/documentation/javascript/examples/polyline-simple
+        function drawLine(coordinate_to_draw){
+        var myPath = new google.maps.Polyline({
+                  path: coordinate_to_draw,
+                  geodesic: true,
+                  strokeColor: '#3333ff',
+                  strokeOpacity: 0.75,
+                  strokeWeight: 5
+                });
+            myPath.setMap(map); 
+ 
+ 
+        }
+            
+        function drawMarker(coordinate_to_draw){
+            coordinate_to_draw.forEach(function(curr_ob){
+                var marker = new google.maps.Marker({
+                    position: curr_ob,
+                    map: map,
+                });
+                marker.setMap(map); 
+            });
+           
+        }
+        
+ 
+        
+    //https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingResults
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXl4QZ3FcLK-48lK_VvmH0CFiVg_PADM8&callback=initMap">
+    </script>
+  </body>
+</html>
+

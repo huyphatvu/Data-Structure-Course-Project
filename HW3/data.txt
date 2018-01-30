@@ -1,0 +1,20 @@
+Testing Cuckoo Hash Function:
+Testing CuckooHash Insertion(Random Number):                 Testing CuckooHash Contains (Random Number):                 Testing CuckooHash Remove (Random Number):
+Case            Test Size           Total Time(ms)              Case            Test Size           Total Time (ms)           Case           Test Size           Total Time (ms)
+   0               500000                  297                   0               500000                  162                   0               500000                  132
+   1              1000000                  347                   1              1000000                  216                   1              1000000                  171
+   2              2000000                  889                   2              2000000                  254                   2              2000000                  247
+   3              4000000                 1346                   3              4000000                  632                   3              4000000                  686
+   4              8000000                 3858                   4              8000000                 1387                   4              8000000                 1373
+   5             16000000                 6553                   5             16000000                 3836                   5             16000000                 2788
+   6             32000000                25551                   0             32000000                 6551                   0             32000000                 5231
+Testing AVL Tree:
+Testing Tree Insertion(Random Number):                       Testing Tree Contains (Random Number):                       Testing Tree Remove (Random Number):
+Case            Test Size           Total Time (ms)             Case            Test Size           Total Time (ms)           Case            Test Size           Total Time (ms)
+   0               500000                  724                   0               500000                  503                   0               500000                  861
+   1              1000000                 1017                   1              1000000                  643                   1              1000000                  891
+   2              2000000                 2072                   2              2000000                 2085                   2              2000000                 2135
+   3              4000000                 5630                   3              4000000                 3442                   3              4000000                 5668
+   4              8000000                14217                   4              8000000                 8731                   4              8000000                13784
+   5             16000000                28815                   5             16000000                20352                   5             16000000                28642
+   6             32000000                64378                   0             32000000                49406                   0             32000000                66728
